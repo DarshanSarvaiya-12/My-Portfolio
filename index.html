@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DarshanSarvaiya.in | Portfolio</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- Base & Variables --- */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --text-color: #ffffff;
+            --border-radius: 30px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            /* Colorful Background Change */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Water Bubbles Animation --- */
+        .bubbles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Behind content */
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: rise 10s infinite ease-in;
+        }
+
+        @keyframes rise {
+            0% { bottom: -100px; transform: translateX(0) scale(1); opacity: 0; }
+            20% { opacity: 0.9; }
+            80% { opacity: 0.9; }
+            100% { bottom: 100%; transform: translateX(100px) scale(1.2); opacity: 0; }
+        }
+
+        /* Bubble variations */
+        .bubble:nth-child(1) { width: 40px; height: 40px; left: 10%; animation-duration: 8s; }
+        .bubble:nth-child(2) { width: 20px; height: 20px; left: 20%; animation-duration: 12s; animation-delay: 2s; }
+        .bubble:nth-child(3) { width: 50px; height: 50px; left: 35%; animation-duration: 10s; animation-delay: 4s; }
+        .bubble:nth-child(4) { width: 30px; height: 30px; left: 50%; animation-duration: 15s; }
+        .bubble:nth-child(5) { width: 60px; height: 60px; left: 65%; animation-duration: 9s; animation-delay: 1s; }
+        .bubble:nth-child(6) { width: 25px; height: 25px; left: 80%; animation-duration: 11s; animation-delay: 3s; }
+        .bubble:nth-child(7) { width: 45px; height: 45px; left: 90%; animation-duration: 13s; }
+
+        /* --- Glassmorphism Utility --- */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- DRAGGABLE Floating Header --- */
+        header {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            padding: 12px;
+            text-align: center;
+            z-index: 9999;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: move;
+            touch-action: none;
+            user-select: none;
+        }
+
+        /* --- Sections & Gap Fixes --- */
+        section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-section {
+            padding-top: 120px;
+            text-align: center;
+        }
+
+        /* Tagline Box & Animation */
+        .tagline-box {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 10px 25px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255,255,255,0.4);
+            animation: floatTagline 3s ease-in-out infinite;
+        }
+
+        @keyframes floatTagline {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .profile-card {
+            display: inline-block;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: var(--border-radius);
+            object-fit: cover;
+            background: #eee;
+        }
+
+        h1 { font-size: 2.8rem; margin: 10px 0; }
+        
+        /* --- Buttons --- */
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            border: 1px solid rgba(255,255,255,0.4);
+            transition: 0.3s;
+            cursor: pointer;
+            border-radius: 50px;
+        }
+
+        .btn:hover { background: white; color: #e73c7e; }
+
+        /* --- Grid System --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .card {
+            padding: 30px;
+            transition: 0.6s ease;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Bar Chart Styles --- */
+        .chart-container {
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .bar-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .bar-bg {
+            background: rgba(255, 255, 255, 0.5);
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .bar-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 1.5s cubic-bezier(0.1, 0.42, 0.41, 1);
+        }
+
+        .fill-web { background: linear-gradient(90deg, #378); }
+        .fill-stock { background: linear-gradient(90deg, #a11); }
+        .fill-learn { background: linear-gradient(90deg, #744992); }
+        .fill-ml { background: linear-gradient(90deg, #742); }
+        .fill-uiux { background: linear-gradient(90deg, #e0c); }
+
+        /* --- Testimonial Slider --- */
+        .slider-container {
+            overflow: hidden;
+            position: relative;
+            padding: 40px 20px;
+            margin-top: 20px;
+        }
+
+        .slide {
+            display: none;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .slide.active { display: block; animation: fadeIn 0.8s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* --- Contact Form (Let's Create) --- */
+        .contact-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 30px;
+        }
+
+        .contact-container h2 { margin-bottom: 25px; }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        ::placeholder { color: rgba(255,255,255,0.7); }
+
+        .send-btn {
+            width: 100%;
+            padding: 15px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .send-btn:hover { background: #333; transform: scale(1.02); }
+
+        /* --- Social Links --- */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            font-size: 1.8rem;
+            margin-top: 30px;
+        }
+
+        .social-links a { color: white; transition: 0.3s; }
+        .social-links a:hover { transform: translateY(-5px); color: #25D366; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .btn-container { flex-direction: column; }
+            header { width: 240px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bubbles-container">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <header id="floatingHeader" class="glass">
+        DarshanSarvaiya.in
+    </header>
+
+    <section class="hero-section">
+        <div class="profile-card glass">
+            <img src="https://i.ibb.co/dsh45wTm/profile.jpg" alt="Darshan" class="profile-img">
+        </div>
+        <h1>Darshan Sarvaiya.</h1>
+        
+        <div class="tagline-box">
+            <h3>“Make your own ways”</h3>
+        </div>
+
+        <p class="tagline">Visionary | Creator | Learner Software Devloper | CS Engeneer</p>
+        
+        <div class="btn-container">
+            <a href="#contact" class="btn glass">Contact Me</a>
+            <button onclick="askAI()" class="btn glass">Ask Me (AI)</button>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 style="text-align: Left">Personal Identity :</h2>
+        <div class="grid">
+            <div class="card glass">
+                <h3>Introduction</h3>
+                <p>I am Darshan Sarvaiya, a curious student from Gujarat who loves science, technology, business, finance and innovation.
+I enjoy exploring new ideas and building things that can solve real problems.</p>
+            </div>
+            <div class="card glass">
+                <h3>Mission</h3>
+                <p>I'm on the Mission to build powerful software products and innovative technologies that make my work automate and more productive per hour.</p>
+            </div>
+            <div class="card glass">
+                <h3>Goals & Dreams</h3>
+                <p>My dream is to build Asia’s biggest software company and create products that impact millions of people.
+I believe in one simple idea: Make your own ways 🚀</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="expertise">
+        <h2 style="text-align:center">Education & Expertise</h2>
+        <div class="grid">
+            <div class="card glass">
+                <h3>Education</h3>
+                <p>• School : K.K High School SavarKundla.<br>• Science student (Biology Group) with strong interest in Physics, technology, business, and software development.
+<br>• Currently studying online (BITS) and learning modern technologies step by step.</p>
+            </div>
+            <div class="card glass">
+                <h3>My Expertise</h3>
+                <p>• programming <br>
+• Web development<br>
+• ML Technologies<br>
+• UI / UX Designs<br>
+• Business Reasearch<br>
+• Stock market research<br>
+• Startup ideas</p>
+            </div>
+        </div>
+
+        <div class="chart-container glass">
+            <h2 style="margin-bottom: 25px;">My Capability</h2>
+            
+            <div class="bar-wrapper">
+                <div class="bar-label"><span>Web development</span><span>40%</span></div>
+                <div class="bar-bg"><div class="bar-fill fill-web" data-percent="40%"></div></div>
+            </div>
+
+            <div class="bar-wrapper">
+                <div class="bar-label"><span>Stock Market</span><span>25%</span></div>
+                <div class="bar-bg"><div class="bar-fill fill-stock" data-percent="25%"></div></div>
+            </div>
+
+            <div class="bar-wrapper">
+                <div class="bar-label"><span>Learning</span><span>15%</span></div>
+                <div class="bar-bg"><div class="bar-fill fill-learn" data-percent="15%"></div></div>
+            </div>
+
+            <div class="bar-wrapper">
+                <div class="bar-label"><span>ML Tech.</span><span>10%</span></div>
+                <div class="bar-bg"><div class="bar-fill fill-ml" data-percent="10%"></div></div>
+            </div>
+
+            <div class="bar-wrapper">
+                <div class="bar-label"><span>UI UX Designs</span><span>10%</span></div>
+                <div class="bar-bg"><div class="bar-fill fill-uiux" data-percent="10%"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 style="text-align:left">Experience :</h2>
+        <div class="grid">
+            <div class="card glass">
+                <h3>Internships</h3>
+                <p>• odoo india ltd.<br>(2 Months) (Gandhinagar)</p>
+            </div>
+            <div class="card glass">
+                <h3>Jobs</h3>
+                <p>• Maria Enterprise<br>Junior Devloper<br>• LG Electronics - SK<br>2 months<br>Seles man</p>
+            </div>
+            <div class="card glass">
+                <h3>Camps</h3>
+                <p>• JCNC-Rajkot camp.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2 style="text-align:left">Currently Building :</h2>
+        <div class="grid">
+            <div class="card glass">
+                <h3>My Projects</h3>
+                <p>• Assume.in (Financial Web)<br>• Portfolio Websites<br>• Mira.ai (ChatBot) (LLM)<br>• StepLine.in (Ai Mind map) (Study)<br>• HyunWears.in (E-Commerce)<br>• Seon.in (Social media platform)</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 style="text-align:left">What People Think about me :</h2>
+        <div class="slider-container glass">
+            <div class="slide active">
+                <p>“Darshan is Curious. He always asks deep questions and thinks differently from others.”</p>
+                <small>-Nilam ma'am</small>
+            </div>
+            <div class="slide">
+                <p>“Darshan is passionate about Technology and Business. He always tries to learn something new.”</p>
+                <small>- Mira</small>
+            </div>
+            <div class="slide">
+                <p>"A dedicated person who always delivers more than expected."</p>
+                <small>- Ali Bhai (Business owner)</small>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="text-align:center">
+        <div class="contact-container glass">
+            <h2>Let's Create</h2>
+            <form id="contactForm">
+                <div class="input-group">
+                    <input type="text" placeholder="Full Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group">
+                    <textarea placeholder="Your Message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="send-btn">Send Message</button>
+            </form>
+        </div>
+
+        <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="https://wa.me/yournumber"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </section>
+
+    <script>
+        // --- DRAGGABLE HEADER LOGIC ---
+        const header = document.getElementById('floatingHeader');
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        let xOffset = 0;
+        let yOffset = 0;
+
+        header.addEventListener("mousedown", dragStart);
+        header.addEventListener("touchstart", dragStart, {passive: false});
+        window.addEventListener("mousemove", drag);
+        window.addEventListener("touchmove", drag, {passive: false});
+        window.addEventListener("mouseup", dragEnd);
+        window.addEventListener("touchend", dragEnd);
+
+        function dragStart(e) {
+            if (e.type === "touchstart") {
+                initialX = e.touches[0].clientX - xOffset;
+                initialY = e.touches[0].clientY - yOffset;
+            } else {
+                initialX = e.clientX - xOffset;
+                initialY = e.clientY - yOffset;
+            }
+            if (e.target === header) isDragging = true;
+        }
+
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                if (e.type === "touchmove") {
+                    currentX = e.touches[0].clientX - initialX;
+                    currentY = e.touches[0].clientY - initialY;
+                } else {
+                    currentX = e.clientX - initialX;
+                    currentY = e.clientY - initialY;
+                }
+                xOffset = currentX;
+                yOffset = currentY;
+                setTranslate(currentX, currentY, header);
+            }
+        }
+
+        function setTranslate(xPos, yPos, el) {
+            el.style.transform = `translate3d(calc(-50% + ${xPos}px), ${yPos}px, 0)`;
+        }
+
+        function dragEnd() {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+        }
+
+        // --- Scroll Reveal Animation ---
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    if(entry.target.classList.contains('chart-container')) {
+                        const bars = entry.target.querySelectorAll('.bar-fill');
+                        bars.forEach(bar => {
+                            bar.style.width = bar.getAttribute('data-percent');
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .chart-container').forEach(card => {
+            observer.observe(card);
+        });
+
+        // --- Testimonial Slider Logic ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showNextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(showNextSlide, 4000);
+
+        // --- AI Button Interaction ---
+        function askAI() {
+            alert(" Hey! I'm Darshan's ai. you can ask me anything about Darshan.");
+        }
+
+        // Contact Form Prevention
+        document.getElementById('contactForm').onsubmit = (e) => {
+            e.preventDefault();
+            alert("Thank you! Your message has been sent.");
+        };
+    </script>
+</body>
+</html>
